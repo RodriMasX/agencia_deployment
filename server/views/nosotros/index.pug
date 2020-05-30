@@ -1,0 +1,29 @@
+extends ../layout/index
+block contenido
+    //- Formas de mandar a llamar a la varible, con signo igual o con hash y llaves
+        h1= pagina 
+    
+    main.container.mt-5
+        .row
+            .col-md-5
+                img(src="img/nosotros.jpg", alt="Imagen de Nosotros", class="img-fluid")
+            .col-md-7
+                h1 #{pagina}
+                blockquote Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt dignissimos error enim at numquam id, animi dolores mollitia quo eveniet vero fuga aut maiores eos quidem labore cum eius! Minima!
+                p Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores sapiente tempora corporis, accusantium aspernatur eveniet voluptatibus optio vero neque similique! Harum ex culpa aut voluptates alias nesciunt, sapiente ratione expedita.
+                p Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, porro debitis optio culpa omnis cumque eveniet ea sunt, illo nemo, nisi neque soluta odio error aliquid molestiae minus placeat ullam.
+    .listado-iconos
+        .container.mt-5.py-5.text-center
+            .row
+                .col-md-4
+                    img(src="img/icono_seguridad.svg", alt="", class="img-fluid mb-4")
+                    h2.mb-4 Seguridad
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                .col-md-4
+                    img(src="img/icono_destinos.svg", alt="", class="img-fluid mb-4")
+                    h2.mb-4 Mejores Destinos
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                .col-md-4
+                    img(src="img/icono_precios.svg", alt="", class="img-fluid mb-4")
+                    h2.mb-4 Mejor Precio
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.

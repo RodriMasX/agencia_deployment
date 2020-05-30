@@ -1,0 +1,14 @@
+blockquote.text-center Lee Sobre Nuestros Clientes y sus Experiencias
+.row.testimoniales
+
+    //- "testimoniales" viene de server\routes\index.js (o el controlador)
+    each testimonial in testimoniales
+        .col-md-6.col-lg-5.mb-4
+            .card
+                .card-body
+                    blockquote.blockquote
+                    p.mb-0
+                        //- .mensaje viene del modelo   
+                        | #{testimonial.mensaje}
+                    footer.blockquote-footer
+                        | #{testimonial.nombre}

@@ -1,0 +1,18 @@
+.row.proximos-viajes
+    //- Se va a iterar el objeto que se definió como "viajes" en el routes/index, para eso se usa el each de PUG
+    each viaje in viajes
+        .col-md-6.col-lg-4.mb-4
+            .card
+                //- Se usa template string en "src" porque son dinámicos
+                img(src=`/img/destinos_${viaje.imagen}.jpg`, class="img-fluid" alt=`${viaje.imagen}`)
+                .card-body
+                    //- Usamos "viaje" porque es como se esta iterando y usamos "titulo" porque es como esta definido en el Modelo que se mapeo.
+                    h2 #{viaje.titulo}
+                    p
+                        i.fas.fa-calendar-alt
+                        |  #{viaje.fecha_ida} - #{viaje.fecha_vuelta}
+                    p
+                        i.fas.fa-dollar-sign
+                        |  #{viaje.precio}
+                    p #{viaje.descripcion.substr(0,100)}
+                    a(href=`viajes/${viaje.id}`, class="btn btn-success btn-block") Más información

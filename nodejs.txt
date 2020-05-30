@@ -1,0 +1,80 @@
+>npm init
+>npm install --save nodemon body-parser express
+
+-- CONFIGURAR EL SERVIDOR DE EXPRESS --
+- Crear carpeta "public" que va a tener todo lo estatico
+- Crear carpeta "server" tendrá, modelos, rutasm, archivos de configuracion y vistas
+- Crear /server/index.js (configuracion del servidor)
+- En package.json
+
+//Para correr los scripts en general: npm run [script]
+//Las apps de node siempre tienen este start, por lo que se puede omitir el "run" y poner: npm start
+"start": "nodemon server/index.js"
+
+- Crear carpeta y archivo /server/routes/index.js para organizar mejor las rutas
+
+-Instalar template engine (https://expressjs.com/en/resources/template-engines.html)
+- >npm install pug
+
+- Crear carpeta server/views (será para las vistas)
+- Crear adicional server/views/index = template para la pagina principal
+- Crear adicional server/views/nosotros = template para la pagina "nosotros"
+- En ambos agregar un "index.pug"
+- En el server/index.js indicarle que usaremos pug
+-Cambiar el .send() a .render() en routes/index.js porque ya estamos usando un template engine, y que toma como parametro el nombre de la vista
+
+-Crear una carpeta dentro de views que se llama layout para hacer la master page y agregar un index.pug y hacer la plantilla
+-Importar la plantilla en cada pug donde se usara. (con extends) y usar el blocque de pug correspondiente
+
+-Para cargar nuestros porpios arrchivos estaticos (css,...), tenemos que indicarle a node , donde estara esa carpeta, por lo que en el  index.js lo pondremos, con esto ya podremos ir a la plantilla maestra e indicarle la ruta href=""css/style.css", no es necesario ponerle "public" porque ya se definio en el index.js
+
+-Crear carpeta en layout llamada "includes" y ahi crear el header y el footer.pug 
+
+- Para pasar variables disponibles en todo el proyecto se usa locals (v.267)
+
+- Cuando queremos que una variable solo se pase a un template (v.269): se definene en el router y en plantilla se mandan llamar
+
+
+- Crear en server una carpeta "config" y un archivo dentro "index.js" y establecemos dos ambientes, desarrollo y produccion. y modificamos el index.js (donde importamos el express y agregamos las configuraciones)
+
+- Para indicarle que estamos en production seria:
+>npm start env --production
+
+= Sequelize =
+- ORM para Javascript.
+- Soporta MYSQL SQLlite , Postgress, SQL Server
+- Mongoosse.js sirve para bases de mongodb
+- Instalar dependencias:
+>npm install --save mysql2 sequelize
+- Crear archivo de configuración: config/database.js
+- Despues importar ese archivo en el index.js
+- Crear la base de datos y tablas
+- Crear los modelos dentro de server/models/ ej: Viajes.js (modelos inician con mayúscula)
+
+- Crear la "c" (el controller)
+- Crear carpeta server/controllers
+
+= Para el deploy del proyecto =
+1) Paramos el server
+//Instalar esta dependencia que nos va a permitir generar variables de entorno, es decir vamos a tener variables para desarollo local y unas otras variables una vez que estemos en el servidor de heroku (por ejemplo los datos la base de datos localmente son unos y en el servidor son otros ) entonces de esta forma vamos a tener un entorno local y un entorno de producción.
+2) >npm install --save-dev dotenv
+3) Crear un archivo en raiz "variables.env" e insertar las variables
+4) Usar las variables en el database.js
+5) En el server/index establecer host y puerto usando tambien variables.env
+6)el package.json, en la parte de scripts, tenemos el de start usando "nodemon", para desrrollo esta bien, pero para produccion, tenemos que escribir un script de nodejs, por lo que hacemos un script "dev" y pasamos lo que tenemos actual y en "start" agregamos: "start": "node server/index" o simplemente "node server" ya que en automatico detectara el index.js, tenemos que tener "start" porque HEROKU lo va a correr automaticamente. (podria ser manual pero es mejor dejarselo a HEROKU)
+
+- En git creamos un repositorio nuevo, y despues en linea de comandos:
+>git init
+
+- Crear el archivo .gitignore
+
+** Extra
+//Antiguamente era el export default
+- module.exports = Viaje
+
+//exports.xxx permite exportar multiples desde un solo archivo, ya que si hubieramos usado module.exports, solo exportaba un metodo del controlador
+
+-Sequelize es una herramienta que por default retorna promises, desde la version 8, nodejs ya soporta oficialmente AsynC Await, por lo que lo podemos usar para hacer el código mas legible y compacto
+
+- Siempre con cualquier iteraccion con la base de datos se recomienda asyn - await
+
