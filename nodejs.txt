@@ -57,7 +57,7 @@
 = Para el deploy del proyecto =
 1) Paramos el server
 //Instalar esta dependencia que nos va a permitir generar variables de entorno, es decir vamos a tener variables para desarollo local y unas otras variables una vez que estemos en el servidor de heroku (por ejemplo los datos la base de datos localmente son unos y en el servidor son otros ) entonces de esta forma vamos a tener un entorno local y un entorno de producción.
-2) >npm install --save-dev dotenv
+2) >npm install --save dotenv
 3) Crear un archivo en raiz "variables.env" e insertar las variables
 4) Usar las variables en el database.js
 5) En el server/index establecer host y puerto usando tambien variables.env
@@ -67,6 +67,49 @@
 >git init
 
 - Crear el archivo .gitignore
+
+>git add .
+>git commit -m "Primer commit"
+>git remote add origin https://github.com/RodriMasX/agencia_deployment.git
+>git push -u origin master
+
+** Crear la app en HEROKU
+
+- Una vez instlado heroku cli:
+
+>heroku create --remote production
+
+- Subir el código que tenemos en nuestro git
+//Esto lo que hace es subir a heroku
+>git push production master
+
+- Despues abrir la app en la pagina de HEROKU y darle en "More" -> View logs 
+- Mandara un error en el log (de hecho si le damos click en "open app" no lo permitira), esto es porque no tenemos migrada la base de datos.
+
+-Heroku permite mysql, tenemos que habilitarloe, entonces en la pantalla del log, le damos en "Resources" y en "Addons" buscamos mysql y escogemos la de "CelarDB"
+
+- Despues dar click en setting y veremos la seccion "config vars", ahi ya viene la url de base de datos de clearDB
+
+- SIGUIENTE:
+1) Migrar base de datos:
+>mysqldump -u root -p agenciadeviajes > agenciadeviajes.sql
+2) Subirla al servidor:
+//Con este comando jalamos la variable de configuracion que tenemos en heroku
+>heroku config | grep CLEARDB_DATABASE_URL (este nombre de variable "CLEARDB...·  lo jalamos de config vars)
+
+>mysql -u [aquiUsuarioDeBDdeHeroku] -h [aquiElHosting] -p [baseDeDatosAReescribir] < agenciadeviajes.sql (este ultimo que termina en sql es el dump que hicimos de la base)
+
+//Agregando las variables de entorno (de produccion)
+//Esto establecera una variable de entorno en Heroku en "config vars", y son las que se estan usando en el archivo de database.js (antes no las reconocia porque ese archivo lo metimos a gitignore porque eran de desarrollo)
+>heroku config:set DB_NOMBRE=[nombreDeLaBaseDeHeroku]
+>heroku config:set BD_USER=[nombreDelUsuariodeDBDeHeroku]
+...
+...
+Hacer este comando con cada una de las variables
+
+- Despues apretar "open app" en HK, si no corre es porque el package.json puede tener devDependecies, se tiene que quitar, ya que el package json instalara todas las dependencias en el server de HK
+
+- Si se hacen cambios, agregarlos a git y hacer el commit
 
 ** Extra
 //Antiguamente era el export default
